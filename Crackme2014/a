@@ -1,0 +1,582 @@
+GAS LISTING /tmp/cciAOGiT.s 			page 1
+
+
+   1              		.file	"crackme.c"
+   4              		.text
+   5              	Ltext0:
+ 209              	.globl _vs1
+ 210              		.data
+ 211              		.align 4
+ 212              	_vs1:
+ 213 0000 65746E45 		.long	1164866661
+ 214 0004 6F792072 		.long	1914730863
+ 215 0008 6E207275 		.long	1970413678
+ 216 000c 3A656D61 		.long	1634559290
+ 217 0010 00000020 		.long	536870912
+ 218 0014 00000000 		.long	0
+ 219              		.text
+ 222              	.globl _out
+ 224              	_out:
+   1:crackme.c     **** #include <stdio.h>
+   2:crackme.c     **** #include <string.h>
+   3:crackme.c     **** 
+   4:crackme.c     **** int vs1[] = {0x456E7465, 0x7220796F, 0x7572206E, 0x616D653A, 0x20000000, 0};
+   5:crackme.c     **** /* 		.ascii "Enter your name: \0"
+   6:crackme.c     ****  213              	LC1:
+   7:crackme.c     ****  214 0012 496E7661 		.ascii "Invalid name\12\0"
+   8:crackme.c     ****  214      6C696420 
+   9:crackme.c     ****  214      6E616D65 
+  10:crackme.c     ****  214      0A00
+  11:crackme.c     ****  215              	LC2:
+  12:crackme.c     ****  216 0020 255800   		.ascii "%X\0"
+  13:crackme.c     ****  217              	LC3:
+  14:crackme.c     ****  218 0023 456E7465 		.ascii "Enter password: \0"
+  15:crackme.c     ****  218      72207061 
+  16:crackme.c     ****  218      7373776F 
+  17:crackme.c     ****  218      72643A20 
+  18:crackme.c     ****  218      00
+  19:crackme.c     ****  219              		.align 4
+  20:crackme.c     ****  220              	LC4:
+  21:crackme.c     ****  221 0034 596F7520 		.ascii "You have successfully found the correct password!\12\0"
+  22:crackme.c     ****  221      68617665 
+  23:crackme.c     ****  221      20737563 
+  24:crackme.c     ****  221      63657373 
+  25:crackme.c     ****  221      66756C6C 
+  26:crackme.c     ****  222              	LC5:
+  27:crackme.c     ****  223 0067 496E7661 		.ascii "Invalid password.\12\0"
+  28:crackme.c     ****  223      6C696420 
+  29:crackme.c     ****  223      70617373 
+  30:crackme.c     ****  223      776F7264 
+  31:crackme.c     ****  223      2E0A00
+  32:crackme.c     **** */
+  33:crackme.c     **** 
+  34:crackme.c     **** void out(int *p)
+  35:crackme.c     **** {
+ 226              	LM1:
+ 227 0000 55       		pushl	%ebp
+ 228 0001 89E5     		movl	%esp, %ebp
+ 229 0003 83EC08   		subl	$8, %esp
+  36:crackme.c     **** 	unsigned int *pp = p;
+ 231              	LM2:
+GAS LISTING /tmp/cciAOGiT.s 			page 2
+
+
+ 232 0006 8B4508   		movl	8(%ebp), %eax
+ 233 0009 8945FC   		movl	%eax, -4(%ebp)
+ 234              	L2:
+  37:crackme.c     **** 	while (*pp)
+ 236              	LM3:
+ 237 000c 8B45FC   		movl	-4(%ebp), %eax
+ 238 000f 833800   		cmpl	$0, (%eax)
+ 239 0012 7440     		je	L3
+  38:crackme.c     **** 	{
+  39:crackme.c     **** 		*pp = ((*pp & 0xff) << 24) | ((*pp & 0xff00) << 8) | ((*pp & 0xff0000) >> 8) | (*pp >> 24);
+ 241              	LM4:
+ 242 0014 8B4DFC   		movl	-4(%ebp), %ecx
+ 243 0017 8B45FC   		movl	-4(%ebp), %eax
+ 244 001a 0FB600   		movzbl	(%eax),%eax
+ 245 001d 89C2     		movl	%eax, %edx
+ 246 001f C1E218   		sall	$24, %edx
+ 247 0022 8B45FC   		movl	-4(%ebp), %eax
+ 248 0025 8B00     		movl	(%eax), %eax
+ 249 0027 2500FF00 		andl	$65280, %eax
+ 249      00
+ 250 002c C1E008   		sall	$8, %eax
+ 251 002f 09C2     		orl	%eax, %edx
+ 252 0031 8B45FC   		movl	-4(%ebp), %eax
+ 253 0034 8B00     		movl	(%eax), %eax
+ 254 0036 250000FF 		andl	$16711680, %eax
+ 254      00
+ 255 003b C1E808   		shrl	$8, %eax
+ 256 003e 09C2     		orl	%eax, %edx
+ 257 0040 8B45FC   		movl	-4(%ebp), %eax
+ 258 0043 8B00     		movl	(%eax), %eax
+ 259 0045 C1E818   		shrl	$24, %eax
+ 260 0048 09D0     		orl	%edx, %eax
+ 261 004a 8901     		movl	%eax, (%ecx)
+  40:crackme.c     **** 		++pp;
+ 263              	LM5:
+ 264 004c 8D45FC   		leal	-4(%ebp), %eax
+ 265 004f 830004   		addl	$4, (%eax)
+ 266 0052 EBB8     		jmp	L2
+ 267              	L3:
+  41:crackme.c     **** 	}
+  42:crackme.c     **** 	printf(p);
+ 269              	LM6:
+ 270 0054 8B4508   		movl	8(%ebp), %eax
+ 271 0057 890424   		movl	%eax, (%esp)
+ 272 005a E8000000 		call	_printf
+ 272      00
+  43:crackme.c     **** }
+ 274              	LM7:
+ 275 005f C9       		leave
+ 276 0060 C3       		ret
+ 280              	Lscope0:
+ 283              		.section .rdata,"dr"
+ 284              	LC0:
+ 285 0000 496E7661 		.ascii "Invalid name\12\0"
+ 285      6C696420 
+ 285      6E616D65 
+ 285      0A00
+GAS LISTING /tmp/cciAOGiT.s 			page 3
+
+
+ 286              	LC1:
+ 287 000e 255800   		.ascii "%X\0"
+ 288              	LC2:
+ 289 0011 456E7465 		.ascii "Enter password: \0"
+ 289      72207061 
+ 289      7373776F 
+ 289      72643A20 
+ 289      00
+ 290              	LC3:
+ 291 0022 596F7520 		.ascii "You have successfully found\0"
+ 291      68617665 
+ 291      20737563 
+ 291      63657373 
+ 291      66756C6C 
+ 292              	LC4:
+ 293 003e 20746865 		.ascii " the correct password!\12\0"
+ 293      20636F72 
+ 293      72656374 
+ 293      20706173 
+ 293      73776F72 
+ 294              	LC5:
+ 295 0056 496E7661 		.ascii "Invalid password.\12\0"
+ 295      6C696420 
+ 295      70617373 
+ 295      776F7264 
+ 295      2E0A00
+ 296              		.text
+ 298              	.globl _main
+ 300              	_main:
+  44:crackme.c     **** 
+  45:crackme.c     **** int main()
+  46:crackme.c     **** {
+ 302              	LM8:
+ 303 0061 55       		pushl	%ebp
+ 304 0062 89E5     		movl	%esp, %ebp
+ 305 0064 81ECC801 		subl	$456, %esp
+ 305      0000
+ 306 006a 83E4F0   		andl	$-16, %esp
+ 307 006d B8000000 		movl	$0, %eax
+ 307      00
+ 308 0072 83C00F   		addl	$15, %eax
+ 309 0075 83C00F   		addl	$15, %eax
+ 310 0078 C1E804   		shrl	$4, %eax
+ 311 007b C1E004   		sall	$4, %eax
+ 312 007e 898554FE 		movl	%eax, -428(%ebp)
+ 312      FFFF
+ 313 0084 8B8554FE 		movl	-428(%ebp), %eax
+ 313      FFFF
+ 314 008a E8000000 		call	__alloca
+ 314      00
+ 316              	LM9:
+ 317 008f E8000000 		call	___main
+ 317      00
+  47:crackme.c     **** 	char name[128];
+  48:crackme.c     **** 	char validSerial[128];
+  49:crackme.c     **** 	char serial[128];
+  50:crackme.c     **** 	int equal = -1;
+GAS LISTING /tmp/cciAOGiT.s 			page 4
+
+
+ 319              	LM10:
+ 320 0094 C78574FE 		movl	$-1, -396(%ebp)
+ 320      FFFFFFFF 
+ 320      FFFF
+  51:crackme.c     **** 	int encoder = 0;
+ 322              	LM11:
+ 323 009e C78570FE 		movl	$0, -400(%ebp)
+ 323      FFFF0000 
+ 323      0000
+  52:crackme.c     **** 	int ni = 0;
+ 325              	LM12:
+ 326 00a8 C7856CFE 		movl	$0, -404(%ebp)
+ 326      FFFF0000 
+ 326      0000
+  53:crackme.c     **** 	int len = 0;
+ 328              	LM13:
+ 329 00b2 C78568FE 		movl	$0, -408(%ebp)
+ 329      FFFF0000 
+ 329      0000
+  54:crackme.c     **** 	int offset = 0;
+ 331              	LM14:
+ 332 00bc C78564FE 		movl	$0, -412(%ebp)
+ 332      FFFF0000 
+ 332      0000
+ 333              	L5:
+  55:crackme.c     **** name:
+  56:crackme.c     **** 	out(vs1);
+ 335              	LM15:
+ 336 00c6 C7042400 		movl	$_vs1, (%esp)
+ 336      000000
+ 337 00cd E82EFFFF 		call	_out
+ 337      FF
+  57:crackme.c     **** 	gets(name);
+ 339              	LM16:
+ 340 00d2 8D8578FF 		leal	-136(%ebp), %eax
+ 340      FFFF
+ 341 00d8 890424   		movl	%eax, (%esp)
+ 342 00db E8000000 		call	_gets
+ 342      00
+  58:crackme.c     **** 	len = strlen(name);
+ 344              	LM17:
+ 345 00e0 8D8578FF 		leal	-136(%ebp), %eax
+ 345      FFFF
+ 346 00e6 890424   		movl	%eax, (%esp)
+ 347 00e9 E8000000 		call	_strlen
+ 347      00
+ 348 00ee 898568FE 		movl	%eax, -408(%ebp)
+ 348      FFFF
+  59:crackme.c     **** 	if (len < 5)
+ 350              	LM18:
+ 351 00f4 83BD68FE 		cmpl	$4, -408(%ebp)
+ 351      FFFF04
+ 352 00fb 7F68     		jg	L8
+  60:crackme.c     **** 	{
+  61:crackme.c     **** 		printf("Invalid name\n");
+ 354              	LM19:
+ 355 00fd C7042400 		movl	$LC0, (%esp)
+GAS LISTING /tmp/cciAOGiT.s 			page 5
+
+
+ 355      000000
+ 356 0104 E8000000 		call	_printf
+ 356      00
+  62:crackme.c     **** 		goto end;
+ 358              	LM20:
+ 359 0109 E95D0100 		jmp	L7
+ 359      00
+ 360              	L9:
+  63:crackme.c     **** 	}
+  64:crackme.c     **** 	goto s;
+  65:crackme.c     **** c:
+  66:crackme.c     **** 	encoder = encoder + name[ni++];
+ 362              	LM21:
+ 363 010e 8B856CFE 		movl	-404(%ebp), %eax
+ 363      FFFF
+ 364 0114 8D55F8   		leal	-8(%ebp), %edx
+ 365 0117 01D0     		addl	%edx, %eax
+ 366 0119 83C080   		addl	$-128, %eax
+ 367 011c 0FBE10   		movsbl	(%eax),%edx
+ 368 011f 8D8570FE 		leal	-400(%ebp), %eax
+ 368      FFFF
+ 369 0125 0110     		addl	%edx, (%eax)
+ 370 0127 8D856CFE 		leal	-404(%ebp), %eax
+ 370      FFFF
+ 371 012d FF00     		incl	(%eax)
+  67:crackme.c     **** 	encoder = encoder + 0xBADC0DE;
+ 373              	LM22:
+ 374 012f 8D8570FE 		leal	-400(%ebp), %eax
+ 374      FFFF
+ 375 0135 8100DEC0 		addl	$195936478, (%eax)
+ 375      AD0B
+  68:crackme.c     **** 	goto l;
+ 377              	LM23:
+ 378 013b E9AB0000 		jmp	L14
+ 378      00
+ 379              	L11:
+  69:crackme.c     **** p:
+  70:crackme.c     **** 	sprintf(validSerial, "%X", encoder);
+ 381              	LM24:
+ 382 0140 8B8570FE 		movl	-400(%ebp), %eax
+ 382      FFFF
+ 383 0146 89442408 		movl	%eax, 8(%esp)
+ 384 014a C7442404 		movl	$LC1, 4(%esp)
+ 384      0E000000 
+ 385 0152 8D85F8FE 		leal	-264(%ebp), %eax
+ 385      FFFF
+ 386 0158 890424   		movl	%eax, (%esp)
+ 387 015b E8000000 		call	_sprintf
+ 387      00
+  71:crackme.c     **** 	goto l;
+ 389              	LM25:
+ 390 0160 E9860000 		jmp	L14
+ 390      00
+ 391              	L8:
+  72:crackme.c     **** s:	
+  73:crackme.c     **** 	printf("Enter password: ");
+ 393              	LM26:
+GAS LISTING /tmp/cciAOGiT.s 			page 6
+
+
+ 394 0165 C7042411 		movl	$LC2, (%esp)
+ 394      000000
+ 395 016c E8000000 		call	_printf
+ 395      00
+  74:crackme.c     **** 	gets(serial);
+ 397              	LM27:
+ 398 0171 8D8578FE 		leal	-392(%ebp), %eax
+ 398      FFFF
+ 399 0177 890424   		movl	%eax, (%esp)
+ 400 017a E8000000 		call	_gets
+ 400      00
+ 401              	LBB2:
+  75:crackme.c     **** 
+  76:crackme.c     ****         for (char *p = serial ; *p ; ++p)
+ 403              	LM28:
+ 404 017f 8D8578FE 		leal	-392(%ebp), %eax
+ 404      FFFF
+ 405 0185 898560FE 		movl	%eax, -416(%ebp)
+ 405      FFFF
+ 406              	L12:
+ 407 018b 8B8560FE 		movl	-416(%ebp), %eax
+ 407      FFFF
+ 408 0191 803800   		cmpb	$0, (%eax)
+ 409 0194 0F84C500 		je	L21
+ 409      0000
+  77:crackme.c     **** 	{
+  78:crackme.c     **** 		switch (*p)
+ 411              	LM29:
+ 412 019a 8B8560FE 		movl	-416(%ebp), %eax
+ 412      FFFF
+ 413 01a0 0FBE00   		movsbl	(%eax),%eax
+ 414 01a3 83E830   		subl	$48, %eax
+ 415 01a6 898558FE 		movl	%eax, -424(%ebp)
+ 415      FFFF
+ 416 01ac 83BD58FE 		cmpl	$70, -424(%ebp)
+ 416      FFFF46
+ 417 01b3 7736     		ja	L14
+ 418 01b5 8B9558FE 		movl	-424(%ebp), %edx
+ 418      FFFF
+ 419 01bb 8B04956C 		movl	L36(,%edx,4), %eax
+ 419      000000
+ 420 01c2 FFE0     		jmp	*%eax
+ 421              		.section .rdata,"dr"
+ 422 0069 000000   		.align 4
+ 423              	L36:
+ 424 006c D3010000 		.long	L35
+ 425 0070 D3010000 		.long	L35
+ 426 0074 D3010000 		.long	L35
+ 427 0078 D3010000 		.long	L35
+ 428 007c D3010000 		.long	L35
+ 429 0080 D3010000 		.long	L35
+ 430 0084 D3010000 		.long	L35
+ 431 0088 D3010000 		.long	L35
+ 432 008c D3010000 		.long	L35
+ 433 0090 D3010000 		.long	L35
+ 434 0094 EB010000 		.long	L14
+ 435 0098 EB010000 		.long	L14
+GAS LISTING /tmp/cciAOGiT.s 			page 7
+
+
+ 436 009c EB010000 		.long	L14
+ 437 00a0 EB010000 		.long	L14
+ 438 00a4 EB010000 		.long	L14
+ 439 00a8 EB010000 		.long	L14
+ 440 00ac EB010000 		.long	L14
+ 441 00b0 EB010000 		.long	L14
+ 442 00b4 EB010000 		.long	L14
+ 443 00b8 EB010000 		.long	L14
+ 444 00bc EB010000 		.long	L14
+ 445 00c0 EB010000 		.long	L14
+ 446 00c4 EB010000 		.long	L14
+ 447 00c8 EB010000 		.long	L14
+ 448 00cc EB010000 		.long	L14
+ 449 00d0 EB010000 		.long	L14
+ 450 00d4 EB010000 		.long	L14
+ 451 00d8 EB010000 		.long	L14
+ 452 00dc EB010000 		.long	L14
+ 453 00e0 EB010000 		.long	L14
+ 454 00e4 EB010000 		.long	L14
+ 455 00e8 EB010000 		.long	L14
+ 456 00ec EB010000 		.long	L14
+ 457 00f0 EB010000 		.long	L14
+ 458 00f4 EB010000 		.long	L14
+ 459 00f8 EB010000 		.long	L14
+ 460 00fc EB010000 		.long	L14
+ 461 0100 EB010000 		.long	L14
+ 462 0104 EB010000 		.long	L14
+ 463 0108 EB010000 		.long	L14
+ 464 010c EB010000 		.long	L14
+ 465 0110 EB010000 		.long	L14
+ 466 0114 EB010000 		.long	L14
+ 467 0118 EB010000 		.long	L14
+ 468 011c EB010000 		.long	L14
+ 469 0120 EB010000 		.long	L14
+ 470 0124 EB010000 		.long	L14
+ 471 0128 EB010000 		.long	L14
+ 472 012c EB010000 		.long	L14
+ 473 0130 EB010000 		.long	L14
+ 474 0134 EB010000 		.long	L14
+ 475 0138 0E010000 		.long	L9
+ 476 013c EB010000 		.long	L14
+ 477 0140 C4010000 		.long	L16
+ 478 0144 EB010000 		.long	L14
+ 479 0148 EB010000 		.long	L14
+ 480 014c EB010000 		.long	L14
+ 481 0150 5F020000 		.long	L21
+ 482 0154 EB010000 		.long	L14
+ 483 0158 EB010000 		.long	L14
+ 484 015c EB010000 		.long	L14
+ 485 0160 EB010000 		.long	L14
+ 486 0164 C6000000 		.long	L5
+ 487 0168 3C020000 		.long	L25
+ 488 016c 40010000 		.long	L11
+ 489 0170 EB010000 		.long	L14
+ 490 0174 EB010000 		.long	L14
+ 491 0178 EB010000 		.long	L14
+ 492 017c EB010000 		.long	L14
+GAS LISTING /tmp/cciAOGiT.s 			page 8
+
+
+ 493 0180 EB010000 		.long	L14
+ 494 0184 F5010000 		.long	L23
+ 495              		.text
+ 496              	L16:
+  79:crackme.c     **** 		{
+  80:crackme.c     **** 		case 'e': return 0;
+ 498              	LM30:
+ 499 01c4 C7855CFE 		movl	$0, -420(%ebp)
+ 499      FFFF0000 
+ 499      0000
+ 500 01ce E9A20000 		jmp	L4
+ 500      00
+ 501              	L35:
+  81:crackme.c     **** 		case 'n': goto name;
+  82:crackme.c     **** 		case 'c': goto c;
+  83:crackme.c     **** 		case 'p': goto p;
+  84:crackme.c     **** 		case 'i': goto ii;
+  85:crackme.c     **** 		case 'v': goto v;
+  86:crackme.c     **** 		case 'o': goto o;
+  87:crackme.c     **** 		case '0':
+  88:crackme.c     **** 		case '1':
+  89:crackme.c     **** 		case '2':
+  90:crackme.c     **** 		case '3':
+  91:crackme.c     **** 		case '4':
+  92:crackme.c     **** 		case '5':
+  93:crackme.c     **** 		case '6':
+  94:crackme.c     **** 		case '7':
+  95:crackme.c     **** 		case '8':
+  96:crackme.c     **** 		case '9':
+  97:crackme.c     **** 			offset += *p - '0'; break;
+ 503              	LM31:
+ 504 01d3 8B8560FE 		movl	-416(%ebp), %eax
+ 504      FFFF
+ 505 01d9 0FBE00   		movsbl	(%eax),%eax
+ 506 01dc 038564FE 		addl	-412(%ebp), %eax
+ 506      FFFF
+ 507 01e2 83E830   		subl	$48, %eax
+ 508 01e5 898564FE 		movl	%eax, -412(%ebp)
+ 508      FFFF
+ 509              	L10:
+ 510              	L14:
+  76:crackme.c     ****         for (char *p = serial ; *p ; ++p)
+ 512              	LM32:
+ 513 01eb 8D8560FE 		leal	-416(%ebp), %eax
+ 513      FFFF
+ 514 01f1 FF00     		incl	(%eax)
+ 515 01f3 EB96     		jmp	L12
+ 516              	L23:
+ 517              	LBE2:
+  98:crackme.c     **** 		}
+  99:crackme.c     **** l:;
+ 100:crackme.c     **** 	}
+ 101:crackme.c     **** 	goto ii;
+ 102:crackme.c     **** v:
+ 103:crackme.c     **** 	if (ni != len) goto ii;
+ 519              	LM33:
+ 520 01f5 8B856CFE 		movl	-404(%ebp), %eax
+GAS LISTING /tmp/cciAOGiT.s 			page 9
+
+
+ 520      FFFF
+ 521 01fb 3B8568FE 		cmpl	-408(%ebp), %eax
+ 521      FFFF
+ 522 0201 7402     		je	L37
+ 523 0203 EB5A     		jmp	L21
+ 524              	L37:
+ 104:crackme.c     **** 	equal = strncmp(validSerial, serial + offset, sizeof(serial) - offset);
+ 526              	LM34:
+ 527 0205 B8800000 		movl	$128, %eax
+ 527      00
+ 528 020a 89C1     		movl	%eax, %ecx
+ 529 020c 2B8D64FE 		subl	-412(%ebp), %ecx
+ 529      FFFF
+ 530 0212 8D8578FE 		leal	-392(%ebp), %eax
+ 530      FFFF
+ 531 0218 038564FE 		addl	-412(%ebp), %eax
+ 531      FFFF
+ 532 021e 8D95F8FE 		leal	-264(%ebp), %edx
+ 532      FFFF
+ 533 0224 894C2408 		movl	%ecx, 8(%esp)
+ 534 0228 89442404 		movl	%eax, 4(%esp)
+ 535 022c 891424   		movl	%edx, (%esp)
+ 536 022f E8000000 		call	_strncmp
+ 536      00
+ 537 0234 898574FE 		movl	%eax, -396(%ebp)
+ 537      FFFF
+ 105:crackme.c     **** 	goto l;
+ 539              	LM35:
+ 540 023a EBAF     		jmp	L14
+ 541              	L25:
+ 106:crackme.c     **** o:
+ 107:crackme.c     **** 	if (equal == 0)
+ 543              	LM36:
+ 544 023c 83BD74FE 		cmpl	$0, -396(%ebp)
+ 544      FFFF00
+ 545 0243 751A     		jne	L21
+ 108:crackme.c     **** 	{
+ 109:crackme.c     **** 		printf("You have successfully found");
+ 547              	LM37:
+ 548 0245 C7042422 		movl	$LC3, (%esp)
+ 548      000000
+ 549 024c E8000000 		call	_printf
+ 549      00
+ 110:crackme.c     **** 		printf(" the correct password!\n");
+ 551              	LM38:
+ 552 0251 C704243E 		movl	$LC4, (%esp)
+ 552      000000
+ 553 0258 E8000000 		call	_printf
+ 553      00
+ 554 025d EB0C     		jmp	L7
+ 555              	L21:
+ 111:crackme.c     **** 	}
+ 112:crackme.c     **** 	else
+ 113:crackme.c     **** 	{
+ 114:crackme.c     **** ii:
+ 115:crackme.c     **** 		printf("Invalid password.\n");
+ 557              	LM39:
+GAS LISTING /tmp/cciAOGiT.s 			page 10
+
+
+ 558 025f C7042456 		movl	$LC5, (%esp)
+ 558      000000
+ 559 0266 E8000000 		call	_printf
+ 559      00
+ 560              	L7:
+ 116:crackme.c     **** 	}
+ 117:crackme.c     **** end:
+ 118:crackme.c     **** 	return 0;
+ 562              	LM40:
+ 563 026b C7855CFE 		movl	$0, -420(%ebp)
+ 563      FFFF0000 
+ 563      0000
+ 564              	L4:
+ 119:crackme.c     **** }
+ 566              	LM41:
+ 567 0275 8B855CFE 		movl	-420(%ebp), %eax
+ 567      FFFF
+ 568 027b C9       		leave
+ 569 027c C3       		ret
+ 583              	Lscope1:
+ 586              		.text
+ 588              	Letext:
+GAS LISTING /tmp/cciAOGiT.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 crackme.c
+     /tmp/cciAOGiT.s:212    .data:00000000 _vs1
+     /tmp/cciAOGiT.s:224    .text:00000000 _out
+     /tmp/cciAOGiT.s:300    .text:00000061 _main
+
+UNDEFINED SYMBOLS
+___main
+__alloca
+_strncmp
+_sprintf
+_strlen
+_gets
+_printf
