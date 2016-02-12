@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<Problem generator="Contester 2.4">
+  <Name lang="ru">Генератор паролей</Name>
+  <Contest><Name lang="ru">Олимпиада</Name></Contest>
+  <PreContest lang="ru">E</PreContest>
+  <TimeLimit platform="native">2000</TimeLimit>
+  <TimeLimit platform="javavm">4000</TimeLimit>
+  <TimeLimit platform="dotnet">4000</TimeLimit>
+  <TimeLimit platform="custom">4000</TimeLimit>
+  <MemoryLimit platform="native">65000</MemoryLimit>
+  <MemoryLimit platform="javavm">65000</MemoryLimit>
+  <MemoryLimit platform="dotnet">65000</MemoryLimit>
+  <MemoryLimit platform="custom">65000</MemoryLimit>
+  <AutoLimits>0</AutoLimits>
+  <Statement lang="ru" src="generator_paroley_ru.htm" />
+  <TestList inputmask="tests/generator_paroley_*_input.txt" patternmask="tests/generator_paroley_*_pattern.txt" />
+  <Judge><Checker src="generator_paroley_checker_1.dpr" /></Judge>
+  <Attempt><Solver src="generator_paroley_solver_01.cpp" /></Attempt>
+  <Attempt><Solver src="generator_paroley_solver_02.cpp" /></Attempt>
+  <Attempt><Solver src="generator_paroley_solver_03.cpp" /></Attempt>
+  <Attempt><Solver src="generator_paroley_solver_04.cpp" /></Attempt>
+</Problem>

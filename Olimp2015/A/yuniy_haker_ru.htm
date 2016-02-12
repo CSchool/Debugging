@@ -1,0 +1,68 @@
+Юному хакеру Васе удалось взломать школьный сервер и скачать оттуда
+программу, проверяющую пароль при обращении к этому серверу.
+
+Ниже приведена эта программа на двух языках - C++ и Паскаль. 
+Она запрашивает с клавиатуры пароль пользователя.
+Если пароль правильный, программа выдает сообщение "Access granted!".
+<br>
+<table>
+<tr><td><b>C++</b></td><td><b>Паскаль</b></td></tr>
+<tr><td><pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char pass[256];
+
+    printf("Enter password: ");
+    gets(pass);
+
+    int sum = 0; 
+    for (char *p = pass; *p ; ++p)
+    {
+        sum += *p - 'a';
+    }
+    if (sum % 124 == 18 && strlen(pass) &gt; 10)
+        printf("Access granted!\n");
+    else
+        printf("Access denied.\n");
+    return 0;
+}
+</pre></td><td><pre>
+var
+    pass: string;
+    sum: integer;
+    i: integer;
+
+begin
+    write('Enter password: ');
+    readln(pass);
+
+    sum:=0;
+    for i := 1 to length(pass) do
+        inc(sum, ord(pass[i]) - ord('a'));
+
+    if (sum mod 124 = 18) and (length(pass) &gt; 10) then
+        writeln('Access granted!')
+    else
+        writeln('Access denied.');
+end.
+</pre></td></tr>
+</table>
+<br>
+
+<br>
+Напишите программу, которая выводит подходящий пароль.
+<br>
+<br>
+<b>Входные данные</b>
+<br>
+Входных данных у программы нет.
+<br>
+<br>
+<b>Выходные данные</b>
+<br>
+Выведите одну строку - пароль, который примет программа из условия.
+<br>
+<br>

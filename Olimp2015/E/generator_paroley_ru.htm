@@ -1,0 +1,105 @@
+Оказалось, что первая программа, найденная Васей на сервере, была просто
+задачей для олимпиады. Тогда Вася продолжил и поиски и
+наткнулся на другую программу.
+
+Она запрашивает с клавиатуры имя и пароль пользователя.
+Если пароль правильный, программа выдает сообщение "Access granted!".
+
+<br>
+<table>
+<tr><td><b>C++</b></td><td><b>Паскаль</b></td></tr>
+<tr><td><pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main()
+{
+    char buf[256];
+    char pass[256];
+
+    printf("Enter your name: ");
+    gets(buf);
+    int sum1 = 0;
+    int i = 0;
+
+    for (char *p = buf ; *p ; ++p, i++)
+    {
+        if (i % 5 == 0)
+            sum1 += (*p - '0');
+    }
+
+    printf("Enter password: ");
+    gets(pass);
+
+    int sum2 = 0; 
+    for (char *p = pass; *p ; ++p)
+    {
+        sum2 += (*p - '0') * (*p - '0') * (*p - '0');
+    }
+    if ((sum1 + sum2) % 21 == 9)
+        printf("Access granted!\n");
+    else
+        printf("Access denied.\n");
+    return 0;
+}
+</pre></td><td><pre>
+var
+    buf, pass: string;
+    sum1, sum2: longint;
+    i: integer;
+
+begin
+    write('Enter your name: ');
+    readln(buf);
+
+    for i := 1 to length(buf) do begin
+        if ((i - 1) mod 5 = 0) then
+           inc(sum1, ord(buf[i]) - ord('0'));
+    end;
+
+    write('Enter password: ');
+    readln(pass);
+
+    for i := 1 to length(pass) do
+        inc(sum2, (ord(pass[i]) - ord('0'))
+                  * (ord(pass[i]) - ord('0'))
+                  * (ord(pass[i]) - ord('0')));
+
+    if ((sum1 + sum2) mod 21 = 9) then
+        writeln('Access granted!')
+    else
+        writeln('Access denied.');
+end.
+</pre></td></tr>
+</table>
+<br>
+<br>
+
+Теперь Вася хочет узнать пароль администратора, чтобы
+исправить свои годовые оценки.
+
+<br>
+Напишите программу, восстанавливающую пароль по заданному имени.
+<br>
+<br>
+<b>Входные данные</b>
+<br>
+Одна строка с именем пользователя. Длина строки не превышает 255 символов.
+<br>
+<br>
+<b>Выходные данные</b>
+<br>
+Выведите одну строку - пароль, который примет программа из условия.
+<br>
+<br>
+<b>Пример</b>
+<br>
+<b>Вход</b>
+<br>
+root
+<br>
+<b>Выход</b>
+<br>
+11212131
+<br>
+<br>
