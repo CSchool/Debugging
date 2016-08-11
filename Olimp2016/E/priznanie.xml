@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<Problem generator="Contester 2.4">
+  <Name lang="ru">Признание</Name>
+  <Contest><Name lang="ru">Олимпиада по системному программированию 2016</Name></Contest>
+  <PreContest lang="ru">E</PreContest>
+  <TimeLimit platform="native">2000</TimeLimit>
+  <TimeLimit platform="javavm">4000</TimeLimit>
+  <TimeLimit platform="dotnet">4000</TimeLimit>
+  <TimeLimit platform="custom">4000</TimeLimit>
+  <MemoryLimit platform="native">65000</MemoryLimit>
+  <MemoryLimit platform="javavm">65000</MemoryLimit>
+  <MemoryLimit platform="dotnet">65000</MemoryLimit>
+  <MemoryLimit platform="custom">65000</MemoryLimit>
+  <AutoLimits>0</AutoLimits>
+  <Statement lang="ru" src="priznanie_ru.htm" />
+  <TestList inputmask="tests/priznanie_*_input.txt" patternmask="tests/priznanie_*_pattern.txt" />
+  <Judge><Checker src="priznanie_checker_1.dpr" /></Judge>
+  <Attempt><Solver src="priznanie_solver_01.dpr" /></Attempt>
+  <Attempt><Solver src="priznanie_solver_02.dpr" /></Attempt>
+</Problem>
