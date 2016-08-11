@@ -1,0 +1,134 @@
+\usepackage[
+  a4paper, mag=1000,
+  left=2cm, right=1cm, top=2cm, bottom=2cm, headsep=0.7cm, footskip=1.27cm
+]{geometry}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{ucs}
+\usepackage[english,russian]{babel}
+\usepackage{cmap}
+\usepackage{pscyr} % Нормальные шрифты
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amssymb}
+
+% цвет в документе
+\usepackage[usenames]{color}
+\usepackage{colortbl}
+
+% собственные разделы
+\usepackage{titlesec}
+\usepackage{titletoc}
+
+% Форматирование чисел
+\usepackage{siunitx}
+\sisetup{range-phrase = \ldots}
+
+% оглавление + ссылки
+\usepackage[pdftex]{hyperref}
+
+\hypersetup{%
+    pdfborder = {0 0 0},
+    colorlinks,
+    citecolor=red,
+    filecolor=Darkgreen,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\usepackage{hypcap}
+\usepackage[numbered]{bookmark} % для цифр в закладках в pdf viewer'ов
+
+\usepackage{tocloft}
+
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+\renewcommand\cftsecleader{\cftdotfill{\cftdotsep}}
+\renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill}
+
+% листинги
+\usepackage{listings}
+\usepackage{color}
+\definecolor{commentGreen}{rgb}{0,0.6,0}
+\usepackage{caption} % для подписей под листингами и таблиц
+%\usepackage[scaled]{beramono}
+
+% графика
+\usepackage[pdftex]{graphicx}
+\graphicspath{{./fig/}} % папка с изображениями
+\usepackage[tikz]{bclogo}
+\usepackage{wrapfig}
+
+%\usepackage{setspace} % для полуторного интервала
+%\onehalfspacing % сам полуторный интервал
+
+\usepackage{indentfirst} % отступ в первом абзаце
+
+% точки в секция и подсекциях
+\usepackage{secdot}
+\sectiondot{subsection}
+
+% Подавление висячих строк
+\clubpenalty=10000
+\widowpenalty=10000
+
+% колонтитулы
+%\usepackage{fancybox,fancyhdr}
+%\pagestyle{fancy}
+%\fancyhf{}
+%\fancyhead[C]{\small{C++ and Qt}} % шапка верхнего колонтитула!!!
+%\fancyfoot[C]{\small{\thepage}} % шапка нижнего колонтитула!!!
+
+% стили листингов кодов
+
+\lstdefinestyle{CPlusPlus}{
+  language=C++,
+  basicstyle=\small\ttfamily,
+  breakatwhitespace=true,
+  breaklines=true,
+  showstringspaces=false,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  commentstyle=\color{commentGreen}\ttfamily,
+  morecomment=[l][\color{magenta}]{\#},
+  numbers=left,
+  xleftmargin=1cm
+}
+\lstset{style=CPlusPlus}
+\lstset{inputencoding=utf8, extendedchars=\true}
+\DeclareUnicodeCharacter{00A0}{~}
+
+%% новый раздел "занятие"
+%\titleclass{\lesson}{straight}[\part]
+%\newcounter{lesson}
+%\renewcommand{\thelesson}{\arabic{lesson}}
+%
+%\titleformat{\lesson}[display]
+%  {\normalfont\Huge\bfseries}{\huge Занятие \thelesson}{20pt}{}
+%\titlespacing*{\lesson}{0pt}{50pt}{40pt}
+%
+%\titlecontents{lesson}
+%    [1.5em] % ie, 1.5em (chapter) + 2.3em
+%    {}
+%    {\bfseries\contentslabel{1.5em}}
+%    {}
+%    {\bfseries\titlerule*[1pc]{}\contentspage}
+
+% Задачи в тексте
+%\newenvironment{task}
+%    { \begin{tabular}{|p{18cm}|} \hline }
+%    { \\ \hline \end{tabular} }
+\newenvironment{task}
+ { \vspace{2ex}\hrule\nobreak\vspace{2ex}$\bigstar$ }
+ { \vspace{2ex}\nobreak\hrule\vspace{2ex} }
+
+\newcommand{\stirling}[2]{\left\{{#1}\atop{#2}\right\}}
+\newcommand{\euler}[2]{\left<{#1}\atop{#2}\right>}
