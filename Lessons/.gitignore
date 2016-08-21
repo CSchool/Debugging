@@ -3,3 +3,7 @@
 *.pdf
 *.toc
 *.bak
+*.nav
+*.vrb
+*.snm
+*.out

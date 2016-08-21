@@ -1,0 +1,278 @@
+\documentclass{beamer}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{ucs}
+\usepackage[english,russian]{babel}
+\usepackage{cmap}
+\usepackage{pscyr} % Нормальные шрифты
+
+% листинги
+\usepackage{listings}
+\usepackage{color}
+\definecolor{commentGreen}{rgb}{0,0.6,0}
+
+\lstdefinestyle{CPlusPlus}{
+  language=C++,
+  basicstyle=\small\ttfamily,
+  breakatwhitespace=true,
+  breaklines=true,
+  showstringspaces=false,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  commentstyle=\color{commentGreen}\ttfamily,
+  morecomment=[l][\color{magenta}]{\#},
+  numbers=left,
+  xleftmargin=1cm
+}
+\lstset{style=CPlusPlus}
+\lstset{inputencoding=utf8, extendedchars=\true}
+\DeclareUnicodeCharacter{00A0}{~}
+
+\begin{document}
+
+  \begin{frame}
+    \frametitle{Отладка и тестирование}
+    \begin{block}{Ошибки в программе есть всегда}
+    \end{block}
+    \begin{block}{Тестирование --- выполнение программы с целью обнаружения ошибок}
+    \end{block}
+    \begin{block}{Отладка --- определение места ошибки и внесение исправлений в программу}
+    \end{block}
+  \end{frame}
+  
+  \begin{frame}[fragile]
+    \frametitle{Сбой и ошибка}
+    \begin{block}{Сбой --- неверная работа программы}
+    \end{block}
+    \begin{block}{Ошибка --- место в программе, где написан некорректный код}
+    \end{block}
+\begin{lstlisting}
+a = 0;
+if (x > 3)
+  a = 10;
+b = 100 / a;
+\end{lstlisting}
+    %More content goes here
+\end{frame}
+
+  \begin{frame}
+    \frametitle{Тестирование}
+    Тестирование --- выполнение программы на некотором наборе данных с целью поиска ошибок
+    \begin{block}{Тест}
+      \begin{itemize}
+        \item Входные данные
+        \item Ожидаемое поведение программы (выходные данные)
+      \end{itemize}
+    \end{block}
+    С разными входными данными работают разные куски программы.
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Критерии тестирования}
+    \framesubtitle{Критерий покрытия путей}
+    Нужно покрыть тестами как можно больше путей в программе.
+\begin{lstlisting}
+if (a == 0)
+  std::cout << "1";
+if (b == 0)
+  std::cout << "2";
+if (c == 0)
+  std::cout << "3";
+\end{lstlisting}
+\end{frame}
+
+  \begin{frame}
+    \frametitle{Критерии тестирования}
+    \framesubtitle{Критерий покрытия путей}
+    \begin{block}{Тесты}
+      \begin{itemize}[<+->]
+        \item вход: $a=0, b=0, c=0$, выход: $123$
+        \item вход: $a=0, b=0, c=1$, выход: $12$
+        \item вход: $a=0, b=1, c=0$, выход: $13$
+        \item вход: $a=0, b=1, c=1$, выход: $1$
+        \item вход: $a=1, b=0, c=0$, выход: $23$
+        \item вход: $a=1, b=0, c=1$, выход: $2$
+        \item вход: $a=1, b=1, c=0$, выход: $3$
+        \item вход: $a=1, b=1, c=1$, выход: $ $
+      \end{itemize}
+    \end{block}
+\end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Критерии тестирования}
+    \framesubtitle{Критерий покрытия путей}
+    Нужно покрыть тестами как можно больше путей в программе.
+\begin{lstlisting}
+while (a != 0)
+{
+    int b;
+    std::cin >> b;
+    a += b;
+}
+\end{lstlisting}
+\end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Критерии тестирования}
+    \framesubtitle{Критерий покрытия ветвей}
+    Нужно покрыть тестами как можно больше ветвей программы.
+\begin{lstlisting}
+if (a == 0)
+  std::cout << "1";
+if (b == 0)
+  std::cout << "2";
+if (c == 0)
+  std::cout << "3";
+\end{lstlisting}
+\end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Критерии тестирования}
+    \framesubtitle{Критерий покрытия ветвей}
+\begin{lstlisting}
+if (a == 0)
+  std::cout << "1";
+else
+  std::cout << "-1";
+if (b == 0)
+  std::cout << "2";
+else
+  std::cout << "-2";
+if (c == 0)
+  std::cout << "3";
+else
+  std::cout << "-3";
+\end{lstlisting}
+\end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Критерии тестирования}
+    \framesubtitle{Критерий покрытия условий}
+    Чтобы каждая часть условия была покрыта хотя бы одним тестом.
+\begin{lstlisting}
+if (a != 0 || c != 0)
+  std::cout << c / a;
+else
+  std::cout << "0";
+\end{lstlisting}
+\end{frame}
+
+  \begin{frame}
+    \frametitle{Как писать тесты}
+    \begin{itemize}[<+->]
+    \item Граничные значения входных данных
+    \item Особенные значения для алгоритма (например, деление на $0$)
+    \item Разные варианты вывода (например, <<YES>> и <<NO>>)
+    \item Максимальное время выполнения программы
+    \item Максимальное потребление памяти
+    \item Несколько типичных тестов
+    \item Несколько случайных тестов
+    \item Желательно выполнить один из критериев покрытия тестами
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[fragile]
+    \frametitle{Журнал тестировщика}
+    \begin{tabular}{p{0.6cm}|p{2cm}|p{3cm}|p{3.5cm}}
+     \textbf N & Входные данные & Ожидаемые выходные данные & Наблюдаемые выходные данные \\
+     \hline 1 & 1 2 3 4 & YES & NO \\
+     \hline 2 & 1 2 3 5 & YES & \\
+     \hline 3 & & & \\
+     \hline 4 & & & \\
+     \hline 5 & & & \\
+     \hline 6 & & & \\
+    \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Принципы отладки}
+  \begin{itemize}[<+->]
+    \item Обдумывать результаты каждого теста
+    \item Не вносить случайные исправления
+    \item Проверять тестами конкретные гипотезы
+    \item Исправлять ошибки по очереди
+    \item Постараться объяснить все видимые симптомы сбоя
+    \item Исправление может внести новые ошибки
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Отладочные средства}
+  \begin{itemize}[<+->]
+    \item Отладочная печать
+    \item Интерактивные отладчики
+    \item Внешние трассировщики и профилировщики
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Трассировка}
+  Трассировка --- это получение трассы работы программы.
+  
+  Трасса может включать значения переменных.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Отладочный вывод}
+  \_\_LINE\_\_ --- номер строки
+  
+  \_\_FILE\_\_ --- номер файла
+\begin{lstlisting}
+std::cout << "Line: " << __LINE__
+    << " in file " << __FILE__ << "\n";
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Отладочный вывод}
+  \framesubtitle{Для быстрой сортировки}
+\begin{lstlisting}
+void print(int line, int *a, int len)
+{
+    std::cout << "L" << line << " ";
+    for (int i = 0 ; i < len ; ++i)
+        std::cout << a[i] << " ";
+    std::cout << "\n";
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Источник значения}
+  \begin{tabular}{lp{2cm}l}
+  \begin{lstlisting}
+a = 1;
+b = 2;
+c = 3;
+d = a + b;
+e = c + b;
+f = a + d;
+  \end{lstlisting}
+  & &
+  \begin{lstlisting}
+a = 1;
+b = 2;
+
+d = a + b;
+
+f = a + d;
+  \end{lstlisting}
+  \\
+  \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Интерактивные отладчики}
+\begin{itemize}
+\item Пошаговое исполнение
+\item Исполнение <<до курсора>>
+\item Просмотр значений переменных
+\item Точки останова (breakpoints)
+\item Точки трассировки (tracepoints)
+\item Точки наблюдения (watchpoints)
+\item Наблюдение за стеком
+\end{itemize}
+\end{frame}
+
+\end{document}
